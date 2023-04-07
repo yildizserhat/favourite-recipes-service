@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.List;
 
@@ -90,6 +91,27 @@ class IngredientControllerTest {
 
     @Test
     @SneakyThrows
+    void shouldGetAllIngredients() {
+        IngredientCreateRequestDTO ingredientCreateRequestDTO1 = new IngredientCreateRequestDTO("Salt");
+        IngredientCreateRequestDTO ingredientCreateRequestDTO2 = new IngredientCreateRequestDTO("Pepper");
+
+        ingredientRepository.save(Ingredient.buildIngredientFromRequest(ingredientCreateRequestDTO1));
+        ingredientRepository.save(Ingredient.buildIngredientFromRequest(ingredientCreateRequestDTO2));
+
+        String url = "/v1/ingredients";
+        MvcResult mvcResult = mvc.perform(get(url)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()).andReturn();
+
+        List<Ingredient> ingredients = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), objectMapper.getTypeFactory().constructCollectionType(List.class, Ingredient.class));
+
+        assertEquals(2, ingredients.size());
+        assertEquals("Salt", ingredients.get(0).getName());
+        assertEquals("Pepper", ingredients.get(1).getName());
+    }
+
+    @Test
+    @SneakyThrows
     void shouldDeleteIngredientById() {
         IngredientCreateRequestDTO ingredientCreateRequestDTO = new IngredientCreateRequestDTO("Salt");
         ingredientRepository.save(Ingredient.buildIngredientFromRequest(ingredientCreateRequestDTO));
@@ -140,4 +162,6 @@ class IngredientControllerTest {
         assertEquals(1, all.size());
         assertEquals("Salt", all.get(0).getName());
     }
+
+
 }
