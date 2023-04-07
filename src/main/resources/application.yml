@@ -1,0 +1,17 @@
+springdoc:
+  swagger-ui:
+    path: /documentation
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/recipe-db
+    driver-class-name: org.postgresql.Driver
+    username: user
+    password: 12345
+  jpa:
+    hibernate:
+      ddl-auto: update
+    generate-ddl: true
+    show-sql: false
+server:
+  port: 8080
+
