@@ -42,7 +42,7 @@ class IngredientServiceImplTest {
 
         Ingredient ingredient = ingredientService.getIngredientById(1L);
 
-        assertEquals(ingredient.getId(), 1L);
+        assertEquals(1L, ingredient.getId());
     }
 
     @Test
@@ -63,7 +63,7 @@ class IngredientServiceImplTest {
 
         Ingredient ingredient = ingredientService.updateIngredientById(1L, ingredientCreateRequestDTO);
 
-        assertEquals(ingredient.getName(), "Salt");
+        assertEquals("Salt", ingredient.getName());
     }
 
 

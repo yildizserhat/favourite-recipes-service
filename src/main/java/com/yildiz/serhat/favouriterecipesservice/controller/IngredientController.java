@@ -23,14 +23,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/v1/ingredients")
 @RequiredArgsConstructor
-@Tag(name = "Ingredient", description = "Endpoints about ingredients")
+@Tag(name = "Ingredient", description = "Endpoints about Ingredients")
 public class IngredientController {
 
     private final IngredientService ingredientService;
 
     @PostMapping
     @Operation(summary = "Create Ingredient")
-    public ResponseEntity<?> createIngredient(@RequestBody @Valid IngredientCreateRequestDTO request) {
+    public ResponseEntity<Void> createIngredient(@RequestBody @Valid IngredientCreateRequestDTO request) {
         ingredientService.createIngredient(request);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -49,7 +49,7 @@ public class IngredientController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete Ingredient By id")
-    public ResponseEntity<?> deleteIngredientById(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> deleteIngredientById(@PathVariable("id") Long id) {
         ingredientService.deleteIngredientById(id);
         return ResponseEntity.ok().build();
     }

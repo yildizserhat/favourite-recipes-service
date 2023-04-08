@@ -25,14 +25,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/v1/recipes")
 @RequiredArgsConstructor
-@Tag(name = "Recipe", description = "Endpoints about recipes")
+@Tag(name = "Recipe", description = "Endpoints about Recipes")
 public class RecipeController {
 
     private final RecipeService recipeService;
 
     @PostMapping
     @Operation(summary = "Create Recipe By id")
-    public ResponseEntity<?> createRecipe(@RequestBody @Valid RecipeCreateRequestDTO request) {
+    public ResponseEntity<Void> createRecipe(@RequestBody @Valid RecipeCreateRequestDTO request) {
         recipeService.createRecipe(request);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
@@ -46,7 +46,7 @@ public class RecipeController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete Recipe By id")
-    public ResponseEntity<?> deleteRecipeById(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> deleteRecipeById(@PathVariable("id") Long id) {
         recipeService.deleteRecipeById(id);
         return ResponseEntity.ok().build();
     }
@@ -60,9 +60,9 @@ public class RecipeController {
     @GetMapping
     @Operation(summary = "Search Recipe with criteria")
     public ResponseEntity<List<Recipe>> searchRecipe(@RequestParam(value = "type", required = false) String type,
-                                                   @RequestParam(value = "numberOfServings", required = false) Integer numberOfServings,
-                                                   @RequestParam(value = "ingredient", required = false) String ingredient,
-                                                   @RequestParam(value = "instruction", required = false) String instruction
+                                                     @RequestParam(value = "numberOfServings", required = false) Integer numberOfServings,
+                                                     @RequestParam(value = "ingredient", required = false) String ingredient,
+                                                     @RequestParam(value = "instruction", required = false) String instruction
     ) {
         return new ResponseEntity<>(recipeService.getRecipeWithCriteria(type, numberOfServings, ingredient, instruction), HttpStatus.OK);
     }

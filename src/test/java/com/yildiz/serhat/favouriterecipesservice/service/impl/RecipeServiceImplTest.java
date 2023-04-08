@@ -31,7 +31,7 @@ class RecipeServiceImplTest {
     private RecipeRepository repository;
 
     @Test
-    public void shouldCreateRecipe() {
+    void shouldCreateRecipe() {
         IngredientCreateRequestDTO ingredientCreateRequestDTO = new IngredientCreateRequestDTO("Salt");
 
         RecipeCreateRequestDTO requestDTO =
@@ -47,16 +47,16 @@ class RecipeServiceImplTest {
 
 
     @Test
-    public void shouldGetRecipeById() {
+    void shouldGetRecipeById() {
         when(repository.findById(1L)).thenReturn(Optional.of(Recipe.builder().id(1L).build()));
 
         Recipe recipe = recipeService.getRecipeById(1L);
 
-        assertEquals(recipe.getId(), 1L);
+        assertEquals(1L, recipe.getId());
     }
 
     @Test
-    public void shouldUpdateRecipe() {
+    void shouldUpdateRecipe() {
         RecipeCreateRequestDTO requestDTO =
                 new RecipeCreateRequestDTO("oven", "Serhat's Recipe", "vegetarian", 5, "30 min", Set.of(1L));
         when(repository.findById(1L)).thenReturn(Optional.of(Recipe.builder().id(1L).build()));
@@ -71,7 +71,7 @@ class RecipeServiceImplTest {
     }
 
     @Test
-    public void shouldDeleteRecipe() {
+    void shouldDeleteRecipe() {
         when(repository.findById(1L)).thenReturn(Optional.of(Recipe.builder().id(1L).build()));
 
         recipeService.deleteRecipeById(1L);

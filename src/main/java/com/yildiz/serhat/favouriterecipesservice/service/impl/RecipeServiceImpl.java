@@ -10,13 +10,14 @@ import com.yildiz.serhat.favouriterecipesservice.service.IngredientService;
 import com.yildiz.serhat.favouriterecipesservice.service.RecipeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
 @Service
 @Slf4j
@@ -44,13 +45,13 @@ public class RecipeServiceImpl implements RecipeService {
                 .instruction(instruction)
                 .build();
 
-        if (StringUtils.isNotBlank(type)) {
+        if (isNotBlank(type)) {
             recipe.setType(RecipeType.getByValue(type));
         }
 
         List<Recipe> recipes = repository.findAll(Example.of(recipe));
 
-        if (StringUtils.isNotBlank(ingredient)) {
+        if (isNotBlank(ingredient)) {
             Ingredient ingredientByName = ingredientService.getIngredientByName(ingredient);
             recipes = recipes.stream().filter(y -> y.getIngredients().contains(ingredientByName)).toList();
         }
