@@ -30,10 +30,10 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public void createRecipe(RecipeCreateRequestDTO request) {
         Recipe recipe = Recipe.buildRecipeFromRequest(request);
-        Set<Ingredient> collect = request.ingredients().stream().map(ingredientService::getIngredientById)
+        Set<Ingredient> ingredients = request.ingredients().stream().map(ingredientService::getIngredientById)
                 .collect(Collectors.toSet());
 
-        recipe.setIngredients(collect);
+        recipe.setIngredients(ingredients);
         Recipe savedRecipe = repository.save(recipe);
         log.info(String.format("Recipe with id: {%s} created", savedRecipe.getId()));
     }
